@@ -1,0 +1,70 @@
+# 服务器配置
+server:
+    port: 80
+    context-path:
+
+# 日志配置
+logging:
+    level:
+        tk.mybatis: TRACE
+
+spring:
+
+    # druid 数据源配置
+    datasource:
+        name: test
+        url: jdbc:mysql://127.0.0.1:3306/demo
+        username: root
+        password: root
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+
+    # Spring MVC 配置
+    mvc:
+        view:
+            prefix: /templates/
+            suffix: .ftl
+
+    # FreeMarker 配置
+    freemarker:
+        cache: false
+        request-context-attribute: request
+
+    # EhCache 配置
+    cache:
+      ehcache:
+        config: classpath:config/ehcache.xml
+
+# MyBatis 配置
+mybatis:
+    type-aliases-package: com.example.model
+    mapper-locations: classpath:mapper/*.xml
+    configuration:
+      cache-enabled: true
+
+# MyBatis Mapper数据库基础操作工具
+mapper:
+    mappers:
+        - com.example.util.MyMapper
+    not-empty: false
+    identity: MYSQL
+
+# MyBatis 分页工具
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
